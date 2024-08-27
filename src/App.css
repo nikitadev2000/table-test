@@ -1,22 +1,25 @@
-/* Общие стили для контейнера таблицы */
-
+@font-face {
+  font-family: Roboto;
+  src: url(./fonts/Roboto-Regular.ttf);
+}
 * {
   font-size: 24px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: Roboto;
 }
 
 .table-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
-
   border-radius: 5px;
+  color: #fff;
 }
 
 .table-controls {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .companyForm {
@@ -26,78 +29,139 @@
   margin: 30px;
 }
 
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #000;
-}
-
-.table-header h3 {
-  flex: 1;
-  text-align: center;
-  margin: 0;
-}
-
-.company-row {
-  border: 1px solid #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+table {
   width: 100%;
-}
-.company-row :nth-child(1n) {
-  border-left: 1px solid #000;
-  padding: 10px 0;
+  border-collapse: collapse;
 }
 
-.addButton {
-  color: red;
-  font-family: "Times New Roman", Times, serif;
+thead {
+  background-color: #000;
+  color: #fff;
 }
 
-.checkbox {
-  margin: 0 auto;
-  display: flex;
+thead th {
+  padding: 10px;
+  text-align: center;
 }
 
-.addButton:hover {
-  font-size: 23px;
+tbody tr:nth-child(odd) {
+  background-color: #1e1e1e;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #303030;
+}
+
+tbody td {
+  text-align: center;
+  padding: 16px;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
   cursor: pointer;
-  background-color: rgba(122, 122, 122, 0.504);
-}
-
-.company-row input[type="checkbox"],
-.company-row .addButton {
-  flex: 0 0 5%;
+  font-size: 20px;
   text-align: center;
+  line-height: 1;
+  font-family: Arial, sans-serif;
 }
-
-.company-name,
-.company-address {
-  flex: 1;
-  text-align: center;
-  max-width: 45%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.delete-button:hover {
+  background-color: #ff1a1a;
 }
 
 .company-row.selected {
-  background-color: #a7a7a7;
+  background-color: #f86300;
+}
+.cell-table {
+  width: 45%;
+}
+.selectedAll {
+  color: #000;
 }
 
 .company-input {
-  border-bottom: 1px dashed #000;
+  height: 23px;
+  width: 90%;
+  outline: none;
 }
 
-.company-input:focus {
-  background: #fff;
+/*----------------------------------------*/
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+}
+
+.custom-checkbox input {
+  display: none;
+}
+
+.checkbox-checkmark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-right: 10px;
+  transition: background-color 0.2s, border-color 0.2s;
+  border: 2px solid transparent;
+}
+
+.toglle-all {
+  border: 1px solid #000;
+}
+
+.custom-checkbox input:checked + .checkbox-checkmark {
+  background-color: #0088fe;
+  border-color: #0088fe;
+}
+
+.checkbox-checkmark:after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 5px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.custom-checkbox input:checked + .checkbox-checkmark:after {
+  opacity: 1;
 }
 
 @media (max-width: 900px) {
   * {
     font-size: 20px;
+  }
+  .company-input {
+    height: 19px;
+  }
+  .checkbox-checkmark {
+    width: 16px;
+    height: 16px;
+  }
+  .checkbox-checkmark:after {
+    width: 8px;
+    height: 4px;
+  }
+  tbody td {
+    padding: 10px;
   }
 }
 
@@ -105,16 +169,43 @@
   .companyForm {
     flex-direction: column;
   }
+  .delete-button {
+    font-size: 16px;
+    margin: 0px;
+    padding: 0;
+  }
+  .checkbox-checkmark {
+    width: 13px;
+    height: 13px;
+  }
+  .checkbox-checkmark:after {
+    width: 7px;
+    height: 3.5px;
+  }
 }
 
 @media (max-width: 560px) {
   * {
     font-size: 16px;
   }
+  .company-input {
+    height: 15px;
+  }
+  .checkbox-checkmark {
+    width: 12px;
+    height: 12px;
+  }
+  .checkbox-checkmark:after {
+    width: 6px;
+    height: 3px;
+  }
 }
 
 @media (max-width: 460px) {
   * {
     font-size: 14px;
+  }
+  .company-input {
+    height: 13px;
   }
 }

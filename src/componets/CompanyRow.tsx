@@ -1,15 +1,13 @@
-import  { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Company, removeCompany, updateCompany } from "../store/companiesSlice";
-
+import { Company, removeCompany, toggleSelectCompany, updateCompany } from "../store/companiesSlice";
 import "../App.css";
 
 interface CompanyRowProps {
   company: Company;
 }
 
-
-const CompanyRow = forwardRef<HTMLDivElement, CompanyRowProps>(({ company }, ref) => {
+const CompanyRow = forwardRef<HTMLTableRowElement, CompanyRowProps>(({ company }, ref) => {
   const dispatch = useDispatch();
 
   const [isEditingName, setIsEditingName] = useState(false);
@@ -28,41 +26,57 @@ const CompanyRow = forwardRef<HTMLDivElement, CompanyRowProps>(({ company }, ref
     dispatch(removeCompany(id));
   };
 
+  const handleToggleSelect = () => {
+    dispatch(toggleSelectCompany(company.id.toString()));
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleUpdate();
+    }
+  };
+
   return (
-    <div className="company-row" ref={ref}>
-      <input type="checkbox" checked={company.selected} />
-      {isEditingName ? (
-        <input
-          className="company-input"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={handleUpdate}
-          autoFocus
-        />
-      ) : (
-        <div className="company-name" onClick={() => setIsEditingName(true)}>
-          {name}
-        </div>
-      )}
-      {isEditingAddress ? (
-        <input
-          className="company-input"
-          type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          onBlur={handleUpdate}
-          autoFocus
-        />
-      ) : (
-        <div className="company-address" onClick={() => setIsEditingAddress(true)}>
-          {address}
-        </div>
-      )}
-      <div className="addButton" onClick={() => handleRemove(company.id)}>
-        X
-      </div>
-    </div>
+    <tr className={`company-row ${company.selected ? "selected" : ""}`} ref={ref}>
+      <td>
+        <label className="custom-checkbox">
+          <input onClick={handleToggleSelect} type="checkbox" checked={company.selected} />
+          <span className="checkbox-checkmark"></span>
+        </label>
+      </td>
+      <td className="cell-table" onClick={() => setIsEditingName(true)}>
+        {isEditingName ? (
+          <input
+            className="company-input"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onBlur={handleUpdate}
+            autoFocus
+            onKeyDown={handleKeyDown}
+          />
+        ) : (
+          name
+        )}
+      </td>
+      <td className="cell-table" onClick={() => setIsEditingAddress(true)}>
+        {isEditingAddress ? (
+          <input
+            className="company-input"
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            onBlur={handleUpdate}
+            autoFocus
+            onKeyDown={handleKeyDown}
+          />
+        ) : (
+          address
+        )}
+      </td>
+      <td className="delete-button" onClick={() => handleRemove(company.id)}>
+        ✖
+      </td>
+    </tr>
   );
 });
 

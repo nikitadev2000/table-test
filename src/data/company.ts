@@ -1,5 +1,3 @@
-
-
 export const companyData = [
   { id: 1, name: "Tech Innovators", address: "123 Silicon Valley", selected: false },
   { id: 2, name: "Green Earth", address: "456 Greenway Ave", selected: false },
@@ -41,7 +39,7 @@ export const companyData = [
   { id: 38, name: "NextLevel Fitness", address: "1515 Strength Blvd", selected: false },
   { id: 39, name: "ClearView Optics", address: "1616 Vision St", selected: false },
   { id: 40, name: "ProHealth", address: "1717 Wellness Ave", selected: false },
-  { id: 40, name: "Company 40", address: "Street 40, City 12, Country", selected: false },
+  { id: 467, name: "Company 40", address: "Street 40, City 12, Country", selected: false },
   { id: 41, name: "Company 41", address: "Street 41, City 34, Country", selected: false },
   { id: 42, name: "Company 42", address: "Street 42, City 56, Country", selected: false },
   { id: 43, name: "Company 43", address: "Street 43, City 78, Country", selected: false },

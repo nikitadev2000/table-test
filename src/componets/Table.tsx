@@ -1,33 +1,46 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import AddCompanyForm from "./AddCompanyForm";
 import CompanyRow from "./CompanyRow";
 import { RootState } from "../store/store";
-
+import { removeCompany, toggleSelectAll } from "../store/companiesSlice";
 import "../App.css";
 
 const Table = () => {
-  const allCompanies = useSelector((state: RootState) => state.companies.companies);
+  const dispatch = useDispatch();
+  const companies = useSelector((state: RootState) => state.companies.companies);
+  const selectedCompanies = companies.filter((company) => company.selected);
+  const selectAll = useSelector((state: RootState) => state.companies.selectAll);
+
   const [visibleCompanies, setVisibleCompanies] = useState(20);
   const [loading, setLoading] = useState(false);
 
   const { ref, inView } = useInView({
     triggerOnce: false,
-    threshold: 0.1, 
+    threshold: 0.1,
   });
 
+  const handleRemoveSelected = () => {
+    selectedCompanies.forEach((company) => {
+      dispatch(removeCompany(company.id));
+    });
+  };
+
+  const handleSelectAll = () => {
+    dispatch(toggleSelectAll());
+  };
+
   const loadMoreCompanies = useCallback(() => {
-    if (inView && visibleCompanies < allCompanies.length && !loading) {
+    if (inView && visibleCompanies < companies.length && !loading) {
       setLoading(true);
       setTimeout(() => {
         setVisibleCompanies((prev) => prev + 20);
         setLoading(false);
       }, 3000);
     }
-  }, [inView, visibleCompanies, allCompanies.length, loading]);
+  }, [inView, visibleCompanies, companies.length, loading]);
 
- 
   React.useEffect(() => {
     loadMoreCompanies();
   }, [inView, loadMoreCompanies]);
@@ -37,26 +50,31 @@ const Table = () => {
       <AddCompanyForm />
       <div className="table-container">
         <div className="table-controls">
-          <input type="checkbox" />
-          <span>Выбрать всё</span>
-          <button onClick={() => {}} disabled={true}>
+          <label className="custom-checkbox">
+            <input onClick={handleSelectAll} checked={selectAll} type="checkbox" />
+            <span className={"checkbox-checkmark " + "toglle-all"}></span>
+          </label>
+          <span className="selectedAll">Выбрать всё</span>
+          <button onClick={handleRemoveSelected} disabled={selectedCompanies.length === 0}>
             Удалить выбранное
           </button>
         </div>
-        <div className="table-header">
-          <h3>Название компании</h3>
-          <h3>Адрес</h3>
-        </div>
-        <div className="table-content">
-          {allCompanies.slice(0, visibleCompanies).map((company, index) => (
-            <CompanyRow
-              key={company.id}
-              company={company}
-              ref={index === visibleCompanies - 1 ? ref : null} 
-            />
-          ))}
-        </div>
-        {loading && <div >Идет загрузка...</div>}
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Название компании</th>
+              <th>Адрес</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {companies.slice(0, visibleCompanies).map((company, index) => (
+              <CompanyRow key={company.id} company={company} ref={index === visibleCompanies - 1 ? ref : null} />
+            ))}
+          </tbody>
+        </table>
+        {loading && <div>Идет загрузка...</div>}
       </div>
     </>
   );

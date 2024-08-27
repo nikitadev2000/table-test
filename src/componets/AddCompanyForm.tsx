@@ -31,6 +31,8 @@ const AddCompanyForm = () => {
     if (selectAll === true) dispatch(toggleSelectAll());
   };
 
+  
+
   return (
     <div className="companyForm">
       <input

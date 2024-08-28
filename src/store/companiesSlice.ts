@@ -10,12 +10,10 @@ export interface Company {
 
 interface CompaniesState {
   companies: Company[];
-  selectAll: boolean;
 }
 
 const initialState: CompaniesState = {
   companies: companyData,
-  selectAll: false,
 };
 
 const companiesSlice = createSlice({
@@ -42,8 +40,8 @@ const companiesSlice = createSlice({
       }
     },
     toggleSelectAll: (state) => {
-      state.selectAll = !state.selectAll;
-      state.companies.forEach((company) => (company.selected = state.selectAll));
+      const allSelected = state.companies.every((company) => company.selected);
+      state.companies.forEach((company) => (company.selected = !allSelected));
     },
   },
 });

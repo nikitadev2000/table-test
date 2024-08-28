@@ -2,19 +2,19 @@ import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 
-import { RootState } from "../store/store";
 import { removeCompany, toggleSelectAll } from "../store/companiesSlice";
 
 import AddCompanyForm from "./AddCompanyForm";
 import CompanyRow from "./CompanyRow";
+import { selectors } from "../store/selectors";
 
 import ".././style/index.css";
 
 const Table = () => {
   const dispatch = useDispatch();
-  const companies = useSelector((state: RootState) => state.companies.companies);
+  const companies = useSelector(selectors.companies);
   const selectedCompanies = companies.filter((company) => company.selected);
-  const selectAll = useSelector((state: RootState) => state.companies.selectAll);
+  const selectAll = useSelector(selectors.isAllSelected);
 
   const [visibleCompanies, setVisibleCompanies] = useState(20);
   const [loading, setLoading] = useState(false);

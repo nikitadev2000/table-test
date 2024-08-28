@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { RootState } from "../store/store";
-import { addCompany, toggleSelectAll } from "../store/companiesSlice";
+import { addCompany } from "../store/companiesSlice";
 
 import ".././style/index.css";
 
 const AddCompanyForm = () => {
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const selectAll = useSelector((state: RootState) => state.companies.selectAll);
+
   const dispatch = useDispatch();
 
   const handleAdd = () => {
@@ -29,19 +28,9 @@ const AddCompanyForm = () => {
     }
   };
 
-  const handleSelectAll = () => {
-    if (selectAll === true) dispatch(toggleSelectAll());
-  };
-
   return (
     <div className="company-form">
-      <input
-        type="text"
-        onClick={handleSelectAll}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Название компании"
-      />
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Название компании" />
       <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Адрес компании" />
       <button onClick={handleAdd}>Добавить компанию</button>
     </div>

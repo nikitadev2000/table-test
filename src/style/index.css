@@ -1,7 +1,8 @@
 @font-face {
   font-family: Roboto;
-  src: url(./fonts/Roboto-Regular.ttf);
+  src: url(./../fonts/Roboto-Regular.ttf);
 }
+
 * {
   font-size: 24px;
   font-family: Roboto;
@@ -22,7 +23,7 @@
   margin-bottom: 20px;
 }
 
-.companyForm {
+.company-form {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -53,7 +54,6 @@ tbody tr:nth-child(even) {
 }
 
 tbody td {
-  text-align: center;
   padding: 16px;
   font-weight: 400;
   text-align: left;
@@ -65,10 +65,11 @@ tbody td {
   background-color: #ff4d4d;
   color: white;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
   line-height: 1;
   font-family: Arial, sans-serif;
+  width: 5.7%;
 }
 .delete-button:hover {
   background-color: #ff1a1a;
@@ -78,6 +79,7 @@ tbody td {
   background-color: #f86300;
 }
 .cell-table {
+  height: 2vw;
   width: 45%;
 }
 .selectedAll {
@@ -90,7 +92,12 @@ tbody td {
   outline: none;
 }
 
-/*----------------------------------------*/
+.loader {
+  display: flex;
+  justify-content: center;
+  color: #000;
+  margin-top: 20px;
+}
 
 .custom-checkbox {
   display: flex;
@@ -165,14 +172,20 @@ tbody td {
   }
 }
 
-@media (max-width: 682px) {
-  .companyForm {
+@media (max-width: 800px) {
+  .company-form {
     flex-direction: column;
+    max-width: 400px;
+    margin: 2% auto;
   }
+}
+
+@media (max-width: 682px) {
   .delete-button {
-    font-size: 16px;
+    font-size: 22px;
     margin: 0px;
     padding: 0;
+    width:  8%;
   }
   .checkbox-checkmark {
     width: 13px;
@@ -199,6 +212,10 @@ tbody td {
     width: 6px;
     height: 3px;
   }
+  .delete-button {
+    font-size: 20px;
+    width:  11%;
+  }
 }
 
 @media (max-width: 460px) {
@@ -206,6 +223,11 @@ tbody td {
     font-size: 14px;
   }
   .company-input {
-    height: 13px;
+    padding: 0;
+    margin: 0;
+    height: 14px;
+  }
+   .delete-button {
+    font-size: 18px;
   }
 }

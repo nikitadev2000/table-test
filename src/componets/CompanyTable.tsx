@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import AddCompanyForm from "./AddCompanyForm";
-import CompanyRow from "./CompanyRow";
+
 import { RootState } from "../store/store";
 import { removeCompany, toggleSelectAll } from "../store/companiesSlice";
-import "../App.css";
+
+import AddCompanyForm from "./AddCompanyForm";
+import CompanyRow from "./CompanyRow";
+
+import ".././style/index.css";
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -37,7 +40,7 @@ const Table = () => {
       setTimeout(() => {
         setVisibleCompanies((prev) => prev + 20);
         setLoading(false);
-      }, 3000);
+      }, 3000); // Таймер для имитации подгрузки данных
     }
   }, [inView, visibleCompanies, companies.length, loading]);
 
@@ -74,7 +77,7 @@ const Table = () => {
             ))}
           </tbody>
         </table>
-        {loading && <div>Идет загрузка...</div>}
+        {loading && <div className="loader">Идет загрузка...</div>}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 
-import './App.css'
-import Table from './componets/Table'
+import Table from './componets/CompanyTable'
+
+import "./style/index.css";
 
 function App() {
   

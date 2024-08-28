@@ -1,7 +1,9 @@
 import { forwardRef, useState } from "react";
 import { useDispatch } from "react-redux";
+
 import { Company, removeCompany, toggleSelectCompany, updateCompany } from "../store/companiesSlice";
-import "../App.css";
+
+import ".././style/index.css";
 
 interface CompanyRowProps {
   company: Company;
